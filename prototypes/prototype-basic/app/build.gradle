@@ -1,18 +1,14 @@
-
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
 }
 
 android {
-    buildFeatures {
-        viewBinding  true
-    }
-    namespace 'com.example.todolist'
+    namespace 'com.example.affirmations'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.todolist"
+        applicationId "com.example.affirmations"
         minSdk 33
         targetSdk 33
         versionCode 1
@@ -27,7 +23,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
