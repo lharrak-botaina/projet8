@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.affirmations'
+    namespace 'com.example.todolist'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.affirmations"
+        applicationId "com.example.todolist"
         minSdk 33
         targetSdk 33
         versionCode 1
