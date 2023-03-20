@@ -9,11 +9,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.R
-import com.example.todolist.data.datasource
 
 class ItemAdapter(
     private val context: Context,
-    private val data: datasource
+    private val data: MutableList<String>
 ) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
    inner class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
@@ -32,16 +31,20 @@ class ItemAdapter(
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = data.dataSet[position]
+        val item = data[position]
         holder.textView.text = item.toString()
-        holder.btnDelete.setOnClickListener {
-            data.dataSet.removeAt(position)
+        holder.btnDelete.setOnClickListener{remove(position)}
+       /* holder.btnDelete.setOnClickListener {
+            data.removeAt(position)
             this.notifyItemRemoved(position)
             Toast.makeText(context, "Task Deleted", Toast.LENGTH_SHORT).show()
-        }
+        }*/
 
     }
-
-    override fun getItemCount() = data.dataSet.size
+private fun remove(position:Int){
+    data.removeAt(position)
+    notifyItemRemoved(position)
+}
+    override fun getItemCount() = data.size
 
 }
