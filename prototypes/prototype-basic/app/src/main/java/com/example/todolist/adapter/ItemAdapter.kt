@@ -6,19 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.R
 
 class ItemAdapter(
     private val context: Context,
-    private val data: MutableList<String>
+    private var data: MutableList<String>,
+    val onClickUpdate: (Int) -> Unit
 ) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
-   inner class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    inner class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView = view.findViewById(R.id.item_title)
-        val btnDelete:Button = view.findViewById(R.id.btnDelete)
-
+        val btnDelete: Button = view.findViewById(R.id.btnDelete)
+        val btnEdit: Button = view.findViewById(R.id.btnEdit)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -27,24 +27,24 @@ class ItemAdapter(
             .inflate(R.layout.list_item, parent, false)
 
         return ItemViewHolder(adapterLayout)
-
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = data[position]
-        holder.textView.text = item.toString()
-        holder.btnDelete.setOnClickListener{remove(position)}
-       /* holder.btnDelete.setOnClickListener {
-            data.removeAt(position)
-            this.notifyItemRemoved(position)
-            Toast.makeText(context, "Task Deleted", Toast.LENGTH_SHORT).show()
-        }*/
-
+        holder.textView.text = item
+        holder.btnDelete.setOnClickListener { remove(position) }
+        holder.btnEdit.setOnClickListener { onClickUpdate(position) }
     }
-private fun remove(position:Int){
-    data.removeAt(position)
-    notifyItemRemoved(position)
-}
-    override fun getItemCount() = data.size
 
+    private fun remove(position: Int) {
+        data.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    override fun getItemCount(): Int = data.size
+
+    fun setItems(items: String) {
+       // data = items
+        //notifyDataSetChanged()
+    }
 }

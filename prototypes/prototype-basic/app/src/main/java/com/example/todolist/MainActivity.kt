@@ -8,24 +8,34 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.adapter.ItemAdapter
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var itemAdapter: ItemAdapter
+    private val myDataset = mutableListOf<String>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val myDataset = mutableListOf<String>()
 
+        val input: EditText = findViewById(R.id.input)
+        val btnAdd: Button = findViewById(R.id.buttonAdd)
+        val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
 
-        val input : EditText = findViewById(R.id.input)
-        val btnAdd : Button = findViewById(R.id.buttonAdd)
-        // val btnDelete:Button = findViewById(R.id.btnDelete)
+        itemAdapter = ItemAdapter(this, myDataset, {position -> update(position)})
+        recyclerView.adapter = itemAdapter
 
-        btnAdd.setOnClickListener(){
-            val value = input.text
-            myDataset.add(value.toString())
-            val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
-            recyclerView.adapter = ItemAdapter(this, myDataset)
-
+        btnAdd.setOnClickListener {
+            val value = input.text.toString()
+            myDataset.add(value)
+            itemAdapter.notifyDataSetChanged()
             input.setText("")
-
         }
+
+    }
+    fun update(position: Int){
+        var dataItem = myDataset[position]
+        var input:EditText=findViewById(R.id.input)
+        input.setText(dataItem)
+        dataItem = input.text.toString()
+        itemAdapter.setItems(dataItem)
     }
 }
